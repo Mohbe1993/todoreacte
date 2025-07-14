@@ -10,44 +10,34 @@ import ToDo from "./ToDo";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { Todoscont } from "../contexts/Todoscont";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-const ctodos = [
-  {
-    id: uuidv4(),
-    Title: "d",
-    Details: "d",
-    stat: false,
-  },
-  {
-    id: uuidv4(),
-    Title: "",
-    Details: "",
-    stat: false,
-  },
-  {
-    id: uuidv4(),
-    Title: "",
-    Details: "",
-    stat: false,
-  },
-];
+import { useContext, useState } from "react";
 
 export default function ToDoList() {
-  const [todos, setTodos] = useState(ctodos);
+  const { todos, setTodos } = useContext(Todoscont);
   const [titleIn, setTitelIn] = useState("");
+  const [textFieldLabel, setTextFieldLabel] = useState(
+    "Add your new task here"
+  );
+
   const todosMap = todos.map((t) => {
-    return <ToDo key={t.id} Title={t.Title} Details={t.Details} />;
+    return <ToDo key={t.id} ToDo={t} />;
   });
-  function addClick(params) {
-    const newTodo = {
-      id: uuidv4(),
-      Title: titleIn,
-      Details: "",
-      stat: false,
-    };
-    setTodos([...todos, newTodo]);
-    setTitelIn("");
+  function addClick() {
+    if (titleIn === "") {
+      setTextFieldLabel("What are you thinking about ?");
+    } else {
+      const newTodo = {
+        id: uuidv4(),
+        Title: titleIn,
+        Details: "",
+        stat: false,
+      };
+      setTodos([...todos, newTodo]);
+      setTitelIn("");
+      setTextFieldLabel("Add your new task here");
+    }
   }
   return (
     <Container maxWidth="md">
@@ -83,7 +73,7 @@ export default function ToDoList() {
                 <TextField
                   style={{ width: "100%" }}
                   id="outlined-basic"
-                  label="Add here"
+                  label={textFieldLabel}
                   variant="outlined"
                   value={titleIn}
                   onChange={(e) => {
