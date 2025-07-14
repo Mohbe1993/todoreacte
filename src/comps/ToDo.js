@@ -18,6 +18,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
+import { TextField } from "@mui/material";
+import { Details, Title } from "@mui/icons-material";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>,
@@ -29,6 +31,10 @@ const Transition = React.forwardRef(function Transition(
 
 export default function ToDo({ ToDo, handleCheckClick }) {
   const { todos, setTodos } = useContext(Todoscont);
+  const [uptodo, setUpTodo] = useState({
+    Title: ToDo.Title,
+    Details: ToDo.Details,
+  });
 
   function handleChecClick() {
     const updatedTodos = todos.map((t) => {
@@ -55,8 +61,78 @@ export default function ToDo({ ToDo, handleCheckClick }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [update, setUpdate] = React.useState(false);
+
+  const handleUpdateOpen = () => {
+    setUpdate(true);
+  };
+
+  const handleUpdateClose = () => {
+    setUpdate(false);
+  };
+  function handleUpdateConf() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id === ToDo.id) {
+        return { ...t, Title: uptodo.Title, Details: uptodo.Details };
+      } else {
+        return t;
+      }
+    });
+    setTodos(updatedTodos);
+    setUpdate(false);
+  }
   return (
     <>
+      <Dialog
+        open={update}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleUpdateClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Edit"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            You can edit here
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="name"
+              name="email"
+              label="Title"
+              fullWidth
+              variant="standard"
+              value={uptodo.Title}
+              onChange={(e) => {
+                setUpTodo({ ...uptodo, Title: e.target.value });
+              }}
+            />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="name"
+              name="email"
+              label="Details"
+              fullWidth
+              value={uptodo.Details}
+              variant="standard"
+              onChange={(e) => {
+                setUpTodo({ ...uptodo, Details: e.target.value });
+              }}
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleUpdateClose}>Disagree</Button>
+          <Button onClick={handleUpdateConf}>Agree</Button>
+        </DialogActions>
+      </Dialog>
+
       <Dialog
         open={open}
         slots={{
@@ -130,6 +206,7 @@ export default function ToDo({ ToDo, handleCheckClick }) {
                   className="btn"
                   aria-label="edit"
                   style={{ color: "yellow", background: "white" }}
+                  onClick={handleUpdateOpen}
                 >
                   <EditIcon />
                 </IconButton>

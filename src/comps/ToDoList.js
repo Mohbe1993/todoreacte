@@ -79,6 +79,7 @@ export default function ToDoList() {
                   onChange={(e) => {
                     setTitelIn(e.target.value);
                   }}
+                  autoFocus
                 />
               </Grid>
               <Grid
