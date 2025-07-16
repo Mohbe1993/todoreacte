@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/todoreacte/static/css/main.d20fa7ec.css",
-    "main.js": "/todoreacte/static/js/main.7e953a40.js",
+    "main.js": "/todoreacte/static/js/main.5e6bb583.js",
     "static/js/453.4bb28fa3.chunk.js": "/todoreacte/static/js/453.4bb28fa3.chunk.js",
     "static/media/LibertinusMono-Regular.ttf": "/todoreacte/static/media/LibertinusMono-Regular.09a71a9bed900d55ea16.ttf",
     "index.html": "/todoreacte/index.html",
     "main.d20fa7ec.css.map": "/todoreacte/static/css/main.d20fa7ec.css.map",
-    "main.7e953a40.js.map": "/todoreacte/static/js/main.7e953a40.js.map",
+    "main.5e6bb583.js.map": "/todoreacte/static/js/main.5e6bb583.js.map",
     "453.4bb28fa3.chunk.js.map": "/todoreacte/static/js/453.4bb28fa3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d20fa7ec.css",
-    "static/js/main.7e953a40.js"
+    "static/js/main.5e6bb583.js"
   ]
 }
