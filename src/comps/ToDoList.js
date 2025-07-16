@@ -12,7 +12,9 @@ import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { Todoscont } from "../contexts/Todoscont";
 import { v4 as uuidv4 } from "uuid";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ToDoList() {
   const { todos, setTodos } = useContext(Todoscont);
@@ -20,10 +22,35 @@ export default function ToDoList() {
   const [textFieldLabel, setTextFieldLabel] = useState(
     "Add your new task here"
   );
+  const [display, setDisplay] = useState("all");
+  const completedTodos = todos.filter((t) => {
+    return t.stat;
+  });
+  const notCompletedTodos = todos.filter((t) => {
+    return !t.stat;
+  });
 
-  const todosMap = todos.map((t) => {
+  let todosToBeOn = todos;
+
+  if (display === "done") {
+    todosToBeOn = completedTodos;
+  } else if (display === "not") {
+    todosToBeOn = notCompletedTodos;
+  }
+
+  const todosMap = todosToBeOn.map((t) => {
     return <ToDo key={t.id} ToDo={t} />;
   });
+
+  useEffect(() => {
+    const storTodos = JSON.parse(localStorage.getItem("toDos"));
+    setTodos(storTodos);
+  }, []);
+
+  function changeDisplay(e) {
+    setDisplay(e.target.value);
+  }
+
   function addClick() {
     if (titleIn === "") {
       setTextFieldLabel("What are you thinking about ?");
@@ -34,14 +61,24 @@ export default function ToDoList() {
         Details: "",
         stat: false,
       };
-      setTodos([...todos, newTodo]);
+      const updatedTodos = [...todos, newTodo];
+      setTodos(updatedTodos);
+      localStorage.setItem("toDos", JSON.stringify(updatedTodos));
       setTitelIn("");
       setTextFieldLabel("Add your new task here");
     }
   }
+  function handleDeleteAll() {
+    if (todos.length === 0) return;
+    setTodos([]);
+    localStorage.setItem("toDos", JSON.stringify([]));
+  }
+
   return (
     <Container maxWidth="md">
-      <Card sx={{ minWidth: 275, my: 1 }}>
+      <Card
+        sx={{ minWidth: 275, my: 1, maxHeight: "80vh", overflowY: "scroll" }}
+      >
         <CardContent>
           <Typography
             gutterBottom
@@ -52,20 +89,20 @@ export default function ToDoList() {
             <Divider />
             <ToggleButtonGroup
               style={{ marginTop: "30px" }}
-              //   value={alignment}
+              value={display}
               exclusive
-              //   onChange={handleAlignment}
+              onChange={changeDisplay}
               aria-label="text alignment"
             >
-              <ToggleButton value="left">All</ToggleButton>
-              <ToggleButton value="center">Done</ToggleButton>
-              <ToggleButton value="right">on going</ToggleButton>
+              <ToggleButton value="all">All</ToggleButton>
+              <ToggleButton value="done">Done</ToggleButton>
+              <ToggleButton value="not">on going</ToggleButton>
             </ToggleButtonGroup>
             {todosMap}
             <Grid container spacing={2} marginTop={2}>
               <Grid
                 item
-                xs={8}
+                xs={6}
                 display="flex"
                 justifyContent="space-around"
                 alignItems="center"
@@ -84,7 +121,7 @@ export default function ToDoList() {
               </Grid>
               <Grid
                 item
-                xs={4}
+                xs={3}
                 display="flex"
                 justifyContent="space-around"
                 alignItems="center"
@@ -104,6 +141,27 @@ export default function ToDoList() {
                 >
                   Add
                 </Button>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+              >
+                <IconButton
+                  className="btnDAll"
+                  aria-label="delete"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    background: "red",
+                    color: "white",
+                  }}
+                  onClick={handleDeleteAll}
+                >
+                  <DeleteIcon /> Delete All
+                </IconButton>
               </Grid>
             </Grid>
           </Typography>

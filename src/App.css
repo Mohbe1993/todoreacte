@@ -21,3 +21,7 @@
   background: #c5c5c5 !important;
   box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
 }
+.btnDAll {
+  border-radius: 10px !important;
+  font-size: 16px !important;
+}

@@ -19,7 +19,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { TextField } from "@mui/material";
-import { Details, Title } from "@mui/icons-material";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>,
@@ -44,12 +43,14 @@ export default function ToDo({ ToDo, handleCheckClick }) {
       return t;
     });
     setTodos(updatedTodos);
+    localStorage.setItem("toDos", JSON.stringify(updatedTodos));
   }
   function handleDeleteConf() {
     const updatedDeletedTodos = todos.filter((t) => {
       return t.id !== ToDo.id;
     });
     setTodos(updatedDeletedTodos);
+    localStorage.setItem("toDos", JSON.stringify(updatedDeletedTodos));
   }
 
   const [open, setOpen] = React.useState(false);
@@ -80,6 +81,8 @@ export default function ToDo({ ToDo, handleCheckClick }) {
       }
     });
     setTodos(updatedTodos);
+    localStorage.setItem("toDos", JSON.stringify(updatedTodos));
+
     setUpdate(false);
   }
   return (
@@ -170,7 +173,10 @@ export default function ToDo({ ToDo, handleCheckClick }) {
                 <Typography
                   gutterBottom
                   variant="h4"
-                  style={{ textAlign: "left" }}
+                  style={{
+                    textAlign: "left",
+                    textDecoration: ToDo.stat ? "line-through green" : "none",
+                  }}
                 >
                   {ToDo.Title}
                 </Typography>
