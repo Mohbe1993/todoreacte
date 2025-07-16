@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/todoreacte/static/css/main.491078b4.css",
-    "main.js": "/todoreacte/static/js/main.00ce505d.js",
+    "main.css": "/todoreacte/static/css/main.d20fa7ec.css",
+    "main.js": "/todoreacte/static/js/main.d18a1766.js",
     "static/js/453.4bb28fa3.chunk.js": "/todoreacte/static/js/453.4bb28fa3.chunk.js",
     "static/media/LibertinusMono-Regular.ttf": "/todoreacte/static/media/LibertinusMono-Regular.09a71a9bed900d55ea16.ttf",
     "index.html": "/todoreacte/index.html",
-    "main.491078b4.css.map": "/todoreacte/static/css/main.491078b4.css.map",
-    "main.00ce505d.js.map": "/todoreacte/static/js/main.00ce505d.js.map",
+    "main.d20fa7ec.css.map": "/todoreacte/static/css/main.d20fa7ec.css.map",
+    "main.d18a1766.js.map": "/todoreacte/static/js/main.d18a1766.js.map",
     "453.4bb28fa3.chunk.js.map": "/todoreacte/static/js/453.4bb28fa3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.491078b4.css",
-    "static/js/main.00ce505d.js"
+    "static/css/main.d20fa7ec.css",
+    "static/js/main.d18a1766.js"
   ]
 }
